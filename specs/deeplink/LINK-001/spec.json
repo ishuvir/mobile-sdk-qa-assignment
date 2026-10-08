@@ -1,0 +1,6 @@
+{
+  "id": "LINK-001",
+  "title": "Joint-holder invite is fetched once and never auto-accepted",
+  "owner": "@onboarding-team",
+  "link": "https://bank.example/invite/joint?token=INV-JOINT-001"
+}

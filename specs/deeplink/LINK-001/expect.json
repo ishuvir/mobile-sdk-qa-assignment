@@ -1,0 +1,18 @@
+{
+  "requestCounts": [
+    {
+      "method": "GET",
+      "url": "/invite/joint/INV-JOINT-001",
+      "count": 1
+    },
+    {
+      "method": "POST",
+      "urlPattern": "/invite/.*/accept",
+      "count": 0
+    }
+  ],
+  "ui": {
+    "screen": "joint_onboarding_screen",
+    "visibleText": "Joint current account"
+  }
+}

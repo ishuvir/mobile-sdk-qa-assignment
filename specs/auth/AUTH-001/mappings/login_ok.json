@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/auth/login",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.deviceId"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "access_token": "AT-login",
+      "refresh_token": "RT-login",
+      "expires_in": 900
+    }
+  }
+}

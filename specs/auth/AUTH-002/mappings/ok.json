@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/accounts",
+    "headers": {
+      "Authorization": {
+        "equalTo": "Bearer AT-new"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "accounts": [
+        {
+          "id": "acc-1",
+          "name": "Current account"
+        }
+      ]
+    }
+  }
+}

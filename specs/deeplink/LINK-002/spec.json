@@ -1,0 +1,6 @@
+{
+  "id": "LINK-002",
+  "title": "Tampered or unsigned invite token is rejected on the device",
+  "owner": "@onboarding-team",
+  "link": "https://bank.example/invite/joint?token=..%2F..%2Fadmin"
+}
