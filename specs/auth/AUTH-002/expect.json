@@ -1,0 +1,22 @@
+{
+  "requestCounts": [
+    {
+      "method": "POST",
+      "url": "/auth/token",
+      "count": 1
+    },
+    {
+      "method": "GET",
+      "url": "/onboarding/status",
+      "count": 2
+    },
+    {
+      "method": "GET",
+      "url": "/accounts",
+      "count": 2
+    }
+  ],
+  "ui": {
+    "screen": "onboarding_continue_screen"
+  }
+}

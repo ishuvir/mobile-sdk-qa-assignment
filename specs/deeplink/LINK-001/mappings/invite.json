@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/invite/joint/INV-JOINT-001"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "inviteId": "INV-JOINT-001",
+      "product": "Joint current account",
+      "role": "JOINT_HOLDER",
+      "inviterName": "A. de Vries",
+      "inviteeEmail": "joint@test.example"
+    }
+  }
+}

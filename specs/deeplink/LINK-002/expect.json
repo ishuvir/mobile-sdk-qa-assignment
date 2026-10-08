@@ -1,0 +1,17 @@
+{
+  "requestCounts": [
+    {
+      "method": "GET",
+      "urlPattern": "/invite/.*",
+      "count": 0
+    },
+    {
+      "method": "POST",
+      "urlPattern": "/invite/.*/accept",
+      "count": 0
+    }
+  ],
+  "ui": {
+    "screen": "invalid_link_screen"
+  }
+}

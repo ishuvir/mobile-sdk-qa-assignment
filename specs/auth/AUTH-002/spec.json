@@ -1,0 +1,9 @@
+{
+  "id": "AUTH-002",
+  "title": "Auth and Onboarding both get a 401: exactly one refresh across both modules",
+  "owner": "@auth-team",
+  "modules": [
+    "auth 3.5",
+    "onboarding 2.1"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "requestCounts": [
+    {
+      "method": "POST",
+      "url": "/auth/login",
+      "count": 1
+    },
+    {
+      "method": "GET",
+      "url": "/accounts",
+      "count": 1
+    }
+  ]
+}
