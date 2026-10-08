@@ -1,0 +1,68 @@
+name: Release candidate
+
+# What this runs: the same contract tests as the PR workflow, on a release-candidate tag.
+# They bring up WireMock inside the test JVM, so there is no service to start.
+#
+# The release gates below are real, but their steps are not wired up in this repo - the
+# scripts they would call (a BOM generator, a compatibility runner) read module compat.yaml
+# files that only exist in the real codebase. They are described rather than faked, because
+# a workflow that references missing scripts fails red for the wrong reason.
+
+on:
+  push:
+    tags: ["v*-rc*"]
+
+jobs:
+  contract-tests:
+    name: Contract tests (Java)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Run the contract tests
+        working-directory: contract-tests
+        run: mvn --batch-mode test
+
+      - name: Upload the surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: contract-tests/target/surefire-reports/
+          if-no-files-found: warn
+
+  # --- the release gates, described rather than wired up ---
+  #
+  # version-set
+  #   Reads each module's compat.yaml and emits bom.json: the set of module versions that
+  #   were tested together. Consumers pin the BOM, not individual modules.
+  #   Gate: every module's declared ranges are satisfiable.
+  #
+  # compatibility-matrix
+  #   Matrix of RC-BOM, RC with the previous minor of each direct dependency, and the oldest
+  #   versions still in use, crossed with min and latest OS on both platforms.
+  #   Gate: any red combination blocks the release.
+  #
+  # upgrade-tests
+  #   Seed a session and a pending invite with N-1, then open with N.
+  #   Gate: data written by the previous release must still be readable.
+  #
+  # deep-link-domains
+  #   Fetch the live assetlinks.json and apple-app-site-association and confirm both list the
+  #   app with a valid signing fingerprint.
+  #   Gate: a broken domain file sends every invite link to the browser instead of the app.
+  #
+  # consumer-smoke
+  #   Not mine to run. Each app team's suite runs against the published RC; the trigger is
+  #   fired from here and the result comes back as a signal into the gate.
+  #
+  # release-gate
+  #   Needs: everything above green, plus no open P1, a changelog, and migration notes for
+  #   any behaviour change. Only then does the version set get published.

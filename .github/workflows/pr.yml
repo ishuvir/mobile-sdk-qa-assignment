@@ -1,0 +1,54 @@
+name: PR checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract-tests:
+    name: Contract tests (Java)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Run the contract tests
+        working-directory: contract-tests
+        run: mvn --batch-mode test
+
+      - name: Upload the surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: contract-tests/target/surefire-reports/
+          if-no-files-found: warn
+
+# What this runs: the Java contract tests, the only suite here that executes end to end.
+# WireMock starts inside the test JVM, so there is no service to declare and no port to
+# reserve. Four specs: AUTH-001, AUTH-002, LINK-001, LINK-002.
+#
+# The Android and iOS jobs are described rather than wired up, because those suites need a
+# host app to compile against - see README "Not done, and why".
+#
+#   android: needs a host app module with the androidTest source set and BuildConfig.WIREMOCK_URL.
+#            Runs lint, testDebugUnitTest, apiCheck, then connectedDebugAndroidTest on an emulator
+#            with a WireMock container on the host network.
+#   ios:     needs a UI test target with specs/ added as a bundle resource. Runs xcodebuild test
+#            on macos-14 with wiremock-standalone on 8080, and uploads the .xcresult on failure.
+#            Gate: fails the PR if a spec regresses on iOS but not Android - that drift should be
+#            visible, not silent.
