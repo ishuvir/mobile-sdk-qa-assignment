@@ -21,7 +21,7 @@ mvn -version       # if missing:  brew install maven openjdk
 ### 1. Get the code
 
 ```bash
-git clone 
+git clone https://github.com/ishuvir/mobile-sdk-qa-assignment.git
 cd mobile-sdk-qa-assignment
 
 # or, from the zip
